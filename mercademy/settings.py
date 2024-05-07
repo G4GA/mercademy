@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core.app.CoreConfig'
+    'core.apps.CoreConfig'
 ]
 
 MIDDLEWARE = [
@@ -76,8 +76,15 @@ WSGI_APPLICATION = 'mercademy.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'mdemy_admin',
+        'PASSWORD': 'mdemy_admin',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'OPTIONS': {
+            'options': '-c search_path=merc_schema,public'
+        }
     }
 }
 
