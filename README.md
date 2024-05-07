@@ -14,10 +14,16 @@ an OS agnostic way to do it:
 
 ## Copy and paste the following sql code to psql in order to create the database:
 
-Note: You need to have postgres and psql first
+You need to have postgres and psql first
 
 ```SQL
 CREATE USER mdemy_admin WITH PASSWORD 'mdemy_admin';
-
 CREATE DATABASE with OWNER mdemy_admin;
+ALL ON DATABASE merc_db TO mdemy_admin;
+GRANT USAGE, CREATE ON SCHEMA PUBLIC TO mdemy_admin;
 ```
+
+---
+**_NOTE:_** Because this is a school project I put the database info directly to the settings.py file, but note that thas is not recommended at all for real projects.
+
+---
