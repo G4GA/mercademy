@@ -18,8 +18,8 @@ You need to have postgres and psql first
 
 ```SQL
 CREATE USER mdemy_admin WITH PASSWORD 'mdemy_admin';
-CREATE DATABASE with OWNER mdemy_admin;
-ALL ON DATABASE merc_db TO mdemy_admin;
+CREATE DATABASE merc_db WITH OWNER mdemy_admin;
+GRANT ALL ON DATABASE merc_db TO mdemy_admin;
 GRANT USAGE, CREATE ON SCHEMA PUBLIC TO mdemy_admin;
 ```
 
