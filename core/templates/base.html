@@ -1,0 +1,40 @@
+    {% load static %}
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <title>Mercademy</title>
+            <meta name="description" content="">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="{% static 'style.css' %}">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+            {% csrf_token %}
+        </head>
+        <body>
+            <header id="core-header">
+                <div id="header-grid">
+                    <img src="{% static 'logo.png' %}" alt="Logo">
+
+                    <div id="session">
+                        {% block user_name %}
+                            {% if user_name %}
+                                <p>¡Hola, {{ user_name }}!  ¡Bienvenido!</p>
+                            {% else %}
+                                <button class="btn btn-secondary header">Iniciar sesión</button>
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                    <input class="search" type="text">
+                    <button id="s-button" class="search header btn btn-secondary">Buscar</button>
+                    {% block carrito %}{% endblock %}
+
+                </div>
+            </header>
+                <p style="margin: 16px;">Productos:</p>
+                <div id="content">
+                    {% block content %}{% endblock %}
+                </div>
+                <script src="{% block js_file %}{% endblock %}"></script>
+        </body>
+    </html>

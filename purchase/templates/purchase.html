@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<ul class="p" id="sc-products">
+    {% block product_list %}
+        {% for product in product_list %}
+        <li class="item it-{{ product.id }}">
+            <img class="item-img"src="{{ product.picture }}" alt="">
+            <div class="div-name">
+                <p>Producto:</p>
+                <p class="item-name">{{ product.name }}</p>
+            </div>
+            <div class="div-name counter">
+                <p>Cantidad:</p>
+                <p class="item-name">1</p>
+            </div>
+            <p class="item-price">${{ product.price }}</p>
+            <div id="item-buttons">
+                <button class="btn btn-secondary add">+</button>
+                <button class="btn btn-secondary sub">-</button>
+                <button class="btn btn-secondary delete">Eliminar</button>
+            </div>
+            <button class="btn btn-secondary seller">Seleccionar vendedor</button>
+        </li>
+        {% endfor %}
+    {% endblock %}
+</ul>
+<button class="btn btn-secondary">Comprar</button>
+{% endblock %}
+
+{% block js_file %}{% static 'purchase.js' %}{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block carrito%}
+    <img id="carrito" src="{% static 'carrito.png' %}" alt="Carrito" href="login.html">
+{% endblock %}
+
+{% block content %}
+{% if products %}
+<ul class='p' id="products">
+    {% for product in products %}
+    <li class="item obj-{{ product.id }}">
+        <img src="{{ product.picture }}" alt="Product image">
+        <p class="name">{{ product.name }}</p>
+        <p class="price">Precio: ${{ product.price }}</p>
+        <button class="btn btn-secondary">Agregar a carrito</button>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No se encontraron productos</p>
+{% endif %}
+{% endblock %}
+
+{% block js_file %}{% static 'home.js' %}{% endblock %}

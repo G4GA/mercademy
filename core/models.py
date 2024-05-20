@@ -4,8 +4,8 @@ class User(models.Model):
     name = models.CharField(max_length=255, blank=False, verbose_name='Display name', default='')
     phone_number = models.CharField(max_length=10, blank=False, verbose_name='Phone number', default='')
     address = models.CharField(max_length=255, blank=False, default='')
-    email_addr = models.EmailField(verbose_name='Email address', blank=False, default='')
-    password = models.CharField(max_length=32, blank=False, default='')
+    email_addr = models.EmailField(verbose_name='Email address', blank=False, default='', unique=True)
+    password = models.CharField(max_length=32, blank=False, default='', unique=True)
 
     class Meta:
         verbose_name = 'User'
@@ -15,9 +15,9 @@ class User(models.Model):
         return  self.name
 
 class Product(models.Model):
-    name = models.CharField(max_length=255, blank=False, verbose_name='Product name', default='')
-    picture = models.ImageField(upload_to='images', blank=False, verbose_name='Product image', default='')
-    description = models.TextField(verbose_name='Product description', blank=False, default='')
+    name = models.CharField(max_length=255, blank=False, verbose_name='Product name', default='', unique=True)
+    picture = models.ImageField(upload_to='images', blank=False, verbose_name='Product image', default='', unique=True)
+    description = models.TextField(verbose_name='Product description', blank=False, default='', unique=True)
 
     category = models.ForeignKey('ProductCategory', on_delete=models.PROTECT)
 
@@ -54,7 +54,7 @@ class Course(models.Model):
         return self.name
 
 class CourseCategory(models.Model):
-    name = models.CharField(max_length=255, verbose_name='Course category', blank=False, default='')
+    name = models.CharField(max_length=255, verbose_name='Course category', blank=False, default='', unique=True)
 
     class Meta:
         verbose_name = 'Course category'
@@ -65,13 +65,13 @@ class CourseCategory(models.Model):
 
 class PrimaryColor(models.Model):
     color_name = models.CharField(max_length=32, null=True, verbose_name='Color name', blank=False, default='')
-    hex_code = models.BigIntegerField(verbose_name='Color hex code', null=False, default='')
+    hex_code = models.CharField(max_length=32, null=True, verbose_name='Color hex code', blank=True, default='')
 
     def __str__(self):
         return self.color_name
 
 class ProductCategory(models.Model):
-    name = models.CharField(max_length=64, null=False, default='')
+    name = models.CharField(max_length=64, null=False, default='', unique=True)
 
     class Meta:
         verbose_name = 'Product category'

@@ -1,23 +1,39 @@
 <!DOCTYPE html>
+{% load static %}
 
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Hello from my django project</title>
+        <title>Login</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-    </head>
-    <body>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'style.css' %}">
         <style>
             body {
-                font-family: "Ubuntu", sans-serif;
-                background-color: azure;
-                font-weight: 100;
+                background-color: #e8c500;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                height: 100vh;
+            }
+            img {
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
             }
         </style>
-        <p>Hello from my django project</p>
-        <script src="" async defer></script>
+    </head>
+    <body>
+        <img style="width: 15%;" src="{% static 'logo.png' %}" alt="">
+        <form id="login-form" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+            {% if auth_failure %}
+                <p id="error">Incorrect email or password. Try again</p>
+            {% endif %}
+        </form>
     </body>
 </html>
