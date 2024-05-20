@@ -23,8 +23,14 @@ def get_sellers(request):
     product_item = Product.objects.filter(id=p_id)[0]
     p = [{'seller':{'id':x.seller.id, 'name':x.seller.name}, 'instance':{'price':f'{float(x.price)}', 'id':x.id}} for x in ProductInstance.objects.filter(product=product_item)]
     p = {'sellers':p, 'product_id':p_id}
-    print(p)
     return JsonResponse(p, status=200)
+
+def get_pins_id(request):
+    body = json.loads(request.body.decode())
+
+    print(body)
+
+    return JsonResponse(body, status=200)
 
 def return_product_info(product:Product):
     info = {

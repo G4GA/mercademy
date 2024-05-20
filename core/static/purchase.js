@@ -104,3 +104,33 @@ for (let i = 0; i < product_info_list.length; i ++) {
         });
     })
 }
+
+document.getElementById('purchase-botton').addEventListener('click', () => {
+    let items = document.getElementsByClassName('item')
+    let body_list = []
+    for (let i = 0;i < items.length; i ++) {
+        body_list.push({
+            'prices': items[i].getElementsByClassName('item-price')[0].textContent,
+            'amount': items[i].getElementsByClassName('counter')[0].getElementsByClassName('item-name')[0].textContent
+        })
+    }
+    let body_dict = {'ins_prices':body_list}
+    fetch('/purchase/get-pins-id', {
+        method:  'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify({
+            body_dict
+        })
+
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    }).then(data => {
+        console.log(data)
+    })
+})
