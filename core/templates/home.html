@@ -6,6 +6,12 @@
     <img id="carrito" src="{% static 'carrito.png' %}" alt="Carrito" href="login.html">
 {% endblock %}
 
+{% block history %}
+    {% if user_name %}
+        <button id="history" class="header btn btn-secondary" style="grid-row: 1 / span 2; grid-column: 5;">Ver historial</button>
+    {% endif %}
+{% endblock %}
+
 {% block sale %}
     {% if sale %}
         <div id="sale">

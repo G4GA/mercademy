@@ -29,11 +29,11 @@
                     <input class="search" type="text">
                     <button id="s-button" class="search header btn btn-secondary">Buscar</button>
                     {% block carrito %}{% endblock %}
-
+                    {% block history %}{% endblock %}
                 </div>
             </header>
                 {% block sale %}{% endblock %}
-                <p style="margin: 16px;">Productos:</p>
+                <p id="info" style="margin: 16px;">Productos:</p>
                 <div id="content">
                     {% block content %}{% endblock %}
                 </div>

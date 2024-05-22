@@ -20,12 +20,14 @@ for (let i = 0; i < product_info_list.length; i ++) {
     add_b.addEventListener('click', (event) => {
         let count = counter.getElementsByClassName('item-name')[0].textContent
         counter.getElementsByClassName('item-name')[0].textContent = `${parseInt(count) + 1}`
+        update_total_price()
     })
     sub_b.addEventListener('click', (event) => {
         let count = counter.getElementsByClassName('item-name')[0].textContent
         if (count > 1) {
             counter.getElementsByClassName('item-name')[0].textContent = `${parseInt(count) - 1}`
         }
+        update_total_price()
     })
     del_b.addEventListener('click', (event) => {
         document.getElementById('sc-products').removeChild(li_item)
@@ -78,9 +80,9 @@ for (let i = 0; i < product_info_list.length; i ++) {
                         let cur_item_price = cur_item.getElementsByClassName('item-price')[0]
                         cur_item_price.textContent = `$${sellers[i].instance.price}`
                         cur_item_price.id = `${sellers[i].instance.id}`
-                        update_total_price()
                         cur_item.removeChild(cur_item.getElementsByClassName('seller-container')[0])
                         cur_item.style = 'grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr 1fr'
+                        update_total_price()
                     })
 
                     seller_container.appendChild(seller_info)
@@ -115,14 +117,14 @@ for (let i = 0; i < product_info_list.length; i ++) {
 }
 
 let update_total_price = () => {
-    let price_elements = document.getElementById('sc-products').getElementsByClassName('item-price')
-    let total = 0
+    let new_total = 0
+    for (let i = 0; i < product_info_list.length; i ++) {
+        let cur_price = product_info_list[i].getElementsByClassName('item-price')[0].textContent.substring(1)
+        let cur_amount = product_info_list[i].getElementsByClassName('counter')[0].getElementsByClassName('item-name')[0].textContent
 
-    for (let i = 0; i < price_elements.length; i ++) {
-        total = total + parseFloat(price_elements[i].textContent.substring(1))
+        new_total += parseFloat(`${parseInt(cur_amount) * parseFloat(cur_price)}`)
     }
-
-    document.getElementById('amount').textContent = total
+    total_item.textContent = `${new_total}`
 }
 
 total_item.textContent = `${total}`

@@ -4,3 +4,9 @@ if (log_in_b) {
         window.location.href = '/login'
     })
 }
+
+if (document.getElementById('go-home')) {
+    document.getElementById('go-home').addEventListener('click', (event) => {
+        window.location.href = '/home'
+    })
+}

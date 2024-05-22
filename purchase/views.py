@@ -16,12 +16,16 @@ def detail(request):
     context['date'] = sale_obj.date
     context['sale_id'] = sale_obj.id
 
+    if request.session.get('user_id'):
+        context['user_name'] = User.objects.filter(id=request.session['user_id'])[0].name
+
     detail_list = []
 
     for model in SaleDetail.objects.filter(sale=sale_obj.id):
         detail_list.append({'p_name': model.product_instance.product.name,
                            'amount': model.amount,
-                           'seller': model.product_instance.seller.name})
+                           'seller': model.product_instance.seller.name,
+                           'price': model.product_instance.price,})
 
     context['detail_list'] = detail_list
 

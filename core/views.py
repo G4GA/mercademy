@@ -6,6 +6,8 @@ from .models import User
 from .models import Product
 from .models import ProductInstance
 
+from purchase.models import Sale
+
 from datetime import datetime
 
 def login(request):
@@ -44,6 +46,24 @@ def home(request):
             products.append(info)
     context['products'] = products
     return render(request, 'home.html', context)
+
+def history(request):
+    context = {}
+    if request.session.get('user_id'):
+        context['user_name'] = User.objects.filter(id=request.session['user_id'])[0].name
+    else:
+        return redirect('home')
+    sale_list = []
+    sale_query_list = Sale.objects.filter(user=User.objects.filter(id=request.session.get('user_id')).first())
+    for sale in sale_query_list:
+        sale_list.append({
+            'id': sale.id,
+            'date': sale.date
+        })
+
+    context['sales'] = sale_list
+
+    return render(request, 'history.html', context)
 
 def return_product_info(product:Product):
     query_price = ProductInstance.objects.filter(product=product.id, quantity__gt=0)

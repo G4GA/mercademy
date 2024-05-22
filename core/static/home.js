@@ -129,3 +129,11 @@ if (document.getElementById('see-detail')) {
         window.location.href = url
     })
 }
+
+if (document.getElementById('history')) {
+    document.getElementById('history').addEventListener('click', (event) => {
+        let url = '/history'
+
+        window.location.href = url
+    })
+}

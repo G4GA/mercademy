@@ -39,7 +39,7 @@ p {
 #header-grid {
     display: grid;
     grid-template-columns: 0.5fr 1.75fr 0.25fr 0.5fr;
-    grid-gap: 0px 0px 10px;
+
     height: 80%;
     width: 90%;
     padding: 8px 10px 12px 10px;
@@ -264,5 +264,36 @@ p.item-price {
     text-align: center;
 }
 
+.detail {
+    background-color: #c1c1c1;
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.detail-list {
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.sale-ul {
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.sale-litem {
+    background-color: #c1c1c1;
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 

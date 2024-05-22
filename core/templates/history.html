@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% block sales %}
+    <ul class="sale-ul p">
+        {% for sale in sales %}
+            <li class="sale-litem">
+                <p class="sale-id">Id: {{ sale.id }}</p>
+                <p>Fecha: {{ sale.date }}</p>
+                <button class="btn btn-secondary see-details" >Ver detalle</button>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+    <button id="go-home" class="btn btn-secondary">Volver</button>
+{% endblock %}
+
+{% block js_file %}{% static 'history.js' %}{% endblock %}

@@ -10,15 +10,20 @@
         <p>Fecha de compra: {{ date }}</p>
     {% endblock %}
     {% block detail_list %}
-        <ul>
+        <ul class="detail-list p">
             {% for detail in detail_list %}
-                <li>
+                <li class="detail">
                     <p>Nombre: {{ detail.p_name }}</p>
-                    <p>Cantidad: {{ detail.amount }}</p>
+                    <p class="detail-amount">Cantidad: {{ detail.amount }}</p>
                     <p>Vendedor: {{ detail.seller }}</p>
+                    <p class="price">Precio: ${{ detail.price }}</p>
                 </li>
             {% endfor %}
         </ul>
     {% endblock %}
+    <p id="detail-total"></p>
+    <button id="go-home" class="btn btn-secondary">Volver</button>
     </div>
 {% endblock %}
+
+{% block js_file %}{% static 'detail.js' %}{% endblock %}
