@@ -12,24 +12,17 @@ checkout_button.innerHTML = 'Proceder al pago'
 checkout_button.className = 'btn btn-secondary'
 shopping_cart_element.appendChild(checkout_button)
 
-var log_in_b = document.getElementById("session").getElementsByTagName('button')[0]
-if (log_in_b) {
-    log_in_b.addEventListener('click', (event) => {
-        window.location.href = '/login'
-    })
-}
-
 checkout_button.addEventListener('click', (event) => {
     let productData = shopping_cart_info_list.map(info => {
+        console.log(info.price.substring(1))
         return {
             id: info.product_id,
+            price: info.price.substring(1),
         };
     });
     let url = `/purchase?data=${encodeURIComponent(JSON.stringify(productData))}`
     window.location.href = url
 })
-
-console.log(log_in_b)
 
 var shopping_cart_info_list = []
 var all_products = document.body.getElementsByClassName('item')
@@ -113,6 +106,26 @@ carrito.addEventListener('click', (event) => {
 
 // carrito.addEventListener('mouseleave', hide_sl)
 
-let get_drop_down_menu = () => {
-    document.createElement()
+
+let close_button = () => {
+    let sale_element = document.getElementById('sale')
+    document.body.removeChild(sale_element)
+}
+
+if (document.getElementById('close')) {
+    document.getElementById('close').addEventListener('click', (event) => {
+        close_button()
+    })
+}
+
+if (document.getElementById('see-detail')) {
+    document.getElementById('see-detail').addEventListener('click', (event) => {
+        let id_str = document.getElementById('sale-id').textContent.substring(document.getElementById('sale-id').textContent.indexOf(':') + 2)
+        let sale_id = new URLSearchParams({'saleId':id_str}).toString();
+        let url = `/purchase/detail/?${sale_id}`
+
+        console.log(url)
+
+        window.location.href = url
+    })
 }

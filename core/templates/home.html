@@ -6,6 +6,17 @@
     <img id="carrito" src="{% static 'carrito.png' %}" alt="Carrito" href="login.html">
 {% endblock %}
 
+{% block sale %}
+    {% if sale %}
+        <div id="sale">
+            <button id="close"class="btn btn-secondary"><img src="{% static 'close.png' %}" alt=""></button>
+            <h2>¡Compra completada de manera exitosa!</h2>
+            <p id="sale-id">Id de la compra: {{ sale.id }}</p>
+            <p id="sale-date">Fecha de la compra: <time datetime="{{ sale.date }}">{{ sale.date }}</time></p>
+            <button id="see-detail" class="btn btn-secondary">Ver detalle</button>
+        </div>
+    {% endif %}
+{% endblock %}
 {% block content %}
 {% if products %}
 <ul class='p' id="products">

@@ -16,3 +16,4 @@ class Sale(models.Model):
 class SaleDetail(models.Model):
     sale = models.ForeignKey('Sale', on_delete=models.PROTECT)
     product_instance = models.ForeignKey(ProductInstance, on_delete=models.PROTECT)
+    amount = models.IntegerField(verbose_name='Amount sold', blank=False, default=0)

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div id="detail" >
+    {% block sale_id %}
+            <p>Id de la compra: {{ sale_id }}</p>
+    {% endblock %}
+    {% block date %}
+        <p>Fecha de compra: {{ date }}</p>
+    {% endblock %}
+    {% block detail_list %}
+        <ul>
+            {% for detail in detail_list %}
+                <li>
+                    <p>Nombre: {{ detail.p_name }}</p>
+                    <p>Cantidad: {{ detail.amount }}</p>
+                    <p>Vendedor: {{ detail.seller }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endblock %}
+    </div>
+{% endblock %}

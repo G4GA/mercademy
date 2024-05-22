@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'mercademy.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'merc_db',
         'USER': 'mdemy_admin',
         'PASSWORD': 'mdemy_admin',
         'HOST': 'localhost',

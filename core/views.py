@@ -6,6 +6,8 @@ from .models import User
 from .models import Product
 from .models import ProductInstance
 
+from datetime import datetime
+
 def login(request):
     print(request)
     context = {
@@ -29,22 +31,27 @@ def login(request):
 
 def home(request):
     context = {}
+    products = []
     if request.session.get('user_id'):
         context['user_name'] = User.objects.filter(id=request.session['user_id'])[0].name
-    products = []
+    if (request.GET):
+        date = datetime.fromisoformat(request.GET['date'].replace('Z', '+00:00'))
+        context['sale'] = {'id': request.GET['id'], 'date': date}
 
     for product in Product.objects.all():
         info = return_product_info(product)
-        products.append(info)
+        if info['price'] is not None:
+            products.append(info)
     context['products'] = products
-
     return render(request, 'home.html', context)
 
 def return_product_info(product:Product):
+    query_price = ProductInstance.objects.filter(product=product.id, quantity__gt=0)
     info = {
         'picture': product.picture.url,
         'name': product.name,
-        'price': float(ProductInstance.objects.filter(product=product.id).order_by('price')[0].price),
+        'price': float(query_price.order_by('price')[0].price)
+                 if query_price else None,
         'id': product.id,
     }
     return info

@@ -2,7 +2,12 @@ let product_info_list = document.getElementById('sc-products').getElementsByTagN
 const csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
 let instances = []
 
+let total_item = document.getElementById('amount')
+let total = 0
+
 for (let i = 0; i < product_info_list.length; i ++) {
+    let price = product_info_list[i].getElementsByClassName('item-price')
+    total = total + parseFloat(price[0].textContent.substring(1))
     let buttons = product_info_list[i].getElementsByTagName('button')
     let counter = product_info_list[i].getElementsByClassName('counter')[0]
     let li_item = product_info_list[i]
@@ -43,6 +48,7 @@ for (let i = 0; i < product_info_list.length; i ++) {
             }
             return response.json(); // Parse the JSON response
         }).then(data => {
+            console.log(data)
             let sellers = data.sellers
             let product_id = data.product_id
             let cur_item = document.getElementById('sc-products').getElementsByClassName(`it-${product_id}`)[0]
@@ -52,30 +58,33 @@ for (let i = 0; i < product_info_list.length; i ++) {
             for (let i = 0; i < sellers.length; i++) {
                 let seller_info = document.createElement('li')
                 seller_info.style = 'display: flex; justify-content: space-between;'
+                if (sellers[i].instance.amount > 0) {
+                    let seller_name = document.createElement('p')
+                    seller_name.id = 'seller-name'
+                    seller_name.textContent = sellers[i].seller.name
+                    seller_info.appendChild(seller_name)
 
-                let seller_name = document.createElement('p')
-                seller_name.id = 'seller-name'
-                seller_name.textContent = sellers[i].seller.name
-                seller_info.appendChild(seller_name)
+                    let seller_price = document.createElement('p')
+                    seller_price.className = 'seller-price'
+                    seller_price.textContent = ` $${sellers[i].instance.price}`
+                    seller_info.appendChild(seller_price)
 
-                let seller_price = document.createElement('p')
-                seller_price.className = 'seller-price'
-                seller_price.textContent = ` $${sellers[i].instance.price}`
-                seller_info.appendChild(seller_price)
+                    let select_b = document.createElement('button')
+                    select_b.textContent = 'Seleccionar'
+                    seller_info.appendChild(select_b)
+                    select_b.className = "btn btn-secondary"
 
-                let select_b = document.createElement('button')
-                select_b.textContent = 'Seleccionar'
-                seller_info.appendChild(select_b)
-                select_b.className = "btn btn-secondary"
+                    select_b.addEventListener('click', (event) => {
+                        let cur_item_price = cur_item.getElementsByClassName('item-price')[0]
+                        cur_item_price.textContent = `$${sellers[i].instance.price}`
+                        cur_item_price.id = `${sellers[i].instance.id}`
+                        update_total_price()
+                        cur_item.removeChild(cur_item.getElementsByClassName('seller-container')[0])
+                        cur_item.style = 'grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr 1fr'
+                    })
 
-                select_b.addEventListener('click', (event) => {
-                    let cur_item_price = cur_item.getElementsByClassName('item-price')[0]
-                    cur_item_price.textContent = `$${sellers[i].instance.price}`
-                    cur_item.removeChild(cur_item.getElementsByClassName('seller-container')[0])
-                    cur_item.style = 'grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr 1fr'
-                })
-
-                seller_container.appendChild(seller_info)
+                    seller_container.appendChild(seller_info)
+                }
             }
             let list_items = document.getElementById('sc-products').getElementsByClassName('item')
             let flag = false
@@ -105,17 +114,32 @@ for (let i = 0; i < product_info_list.length; i ++) {
     })
 }
 
+let update_total_price = () => {
+    let price_elements = document.getElementById('sc-products').getElementsByClassName('item-price')
+    let total = 0
+
+    for (let i = 0; i < price_elements.length; i ++) {
+        total = total + parseFloat(price_elements[i].textContent.substring(1))
+    }
+
+    document.getElementById('amount').textContent = total
+}
+
+total_item.textContent = `${total}`
+
 document.getElementById('purchase-botton').addEventListener('click', () => {
     let items = document.getElementsByClassName('item')
     let body_list = []
     for (let i = 0;i < items.length; i ++) {
         body_list.push({
-            'prices': items[i].getElementsByClassName('item-price')[0].textContent,
+            'name': items[i].getElementsByClassName('p-name')[0].getElementsByClassName('item-name')[0].textContent,
+            'id': items[i].getElementsByClassName('item-price')[0].id,
+            'price': items[i].getElementsByClassName('item-price')[0].textContent.substring(1),
             'amount': items[i].getElementsByClassName('counter')[0].getElementsByClassName('item-name')[0].textContent
         })
     }
-    let body_dict = {'ins_prices':body_list}
-    fetch('/purchase/get-pins-id', {
+    let body_dict = {'product_info':body_list}
+    fetch('/purchase/make-sale', {
         method:  'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -131,6 +155,25 @@ document.getElementById('purchase-botton').addEventListener('click', () => {
         }
         return response.json();
     }).then(data => {
-        console.log(data)
+        if (data['error']) {
+            let e_info = data['error']
+            if (document.getElementById('error')) {
+                document.getElementById('error').removeChild()
+            }
+            let error_messagge = document.createElement('p')
+            error_messagge.id = 'error'
+            if (data['error'] === 'user undefined') {
+                error_messagge.style.color = 'blue'
+                error_messagge.textContent = 'Primero debes iniciar sesion'
+            } else {
+                error_messagge.style.color = 'red'
+                error_messagge.textContent = `Limite máximo de artículos excedido para ${e_info['name']}. Limite: ${e_info['amount']}`
+            }
+            document.getElementById('content').appendChild(error_messagge)
+        } else {
+            let data_info = new URLSearchParams(data).toString();
+            let url = `/home?${data_info}`
+            window.location.href = url
+        }
     })
 })

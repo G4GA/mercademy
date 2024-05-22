@@ -183,6 +183,32 @@ p {
     text-align: center;
 }
 
+#sale {
+    width: 100%;
+    background-color: rgb(239, 182, 255);
+    padding: 0 0 0 16px;
+}
+
+#close {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    right: 16px;
+}
+
+#sale > button > img {
+    width: 40px;
+    height: 40px;
+}
+
+#total {
+    display: flex;
+    justify-content: center;
+
+}
+
 .item {
     padding: 15px;
     background-color: #c1c1c1;

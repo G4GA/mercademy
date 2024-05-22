@@ -8,7 +8,7 @@
         {% for product in product_list %}
         <li class="item it-{{ product.id }}">
             <img class="item-img"src="{{ product.picture }}" alt="">
-            <div class="div-name">
+            <div class="div-name p-name">
                 <p>Producto:</p>
                 <p class="item-name">{{ product.name }}</p>
             </div>
@@ -27,6 +27,10 @@
         {% endfor %}
     {% endblock %}
 </ul>
+<div id="total">
+    <p>Total: $</p>
+    <p id="amount"></p>
+</div>
 <button id="purchase-botton" class="btn btn-secondary">Comprar</button>
 {% endblock %}
 
