@@ -106,7 +106,6 @@ carrito.addEventListener('click', (event) => {
 
 // carrito.addEventListener('mouseleave', hide_sl)
 
-
 let close_button = () => {
     let sale_element = document.getElementById('sale')
     document.body.removeChild(sale_element)

@@ -27,3 +27,5 @@ GRANT USAGE, CREATE ON SCHEMA PUBLIC TO mdemy_admin;
 **_NOTE:_** Because this is a school project I put the database info directly to the settings.py file, but note that thas is not recommended at all for real projects.
 
 ---
+
+PROJECT FINISHED
